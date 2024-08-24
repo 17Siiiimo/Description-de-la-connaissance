@@ -1,0 +1,12 @@
+{
+    "dateCreation": "2024-12-08",
+    "idEmployé": 1,
+    "idGroupe": 6,
+    "idStatut": 3,
+    "titre": "reclamation d'accient 1",
+    "contenu": "00000000000000",
+    "visionNext": "proch vision1",
+    "visionCurrent": "vision1",
+    "duration": "4jours",
+    "public": "oui"
+}

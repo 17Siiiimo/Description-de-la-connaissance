@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description de la connaissance</title>
+    <link rel="stylesheet" href="static/page2.css">
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-header">Description de la connaissance</div>
+    <form id="knowledgeForm" method="post" action="/submit">
+        <div class="form-group">
+            <label for="dateCreation">Date de création</label>
+            <input type="date" id="dateCreation" name="dateCreation" value="2024-07-12">
+        </div>
+        <div class="form-group flex-container">
+            <div>
+                <label for="nom-prenom-employe" class="required">Nom et Prénom</label>
+                <input type="text" id="nom-prenom-employe" name="Nom et Prénom" required>
+            </div>
+            
+            <div>
+                <label for="statut" class="required">Statut</label>
+                <select id="statut" name="statut" required>
+                    <option value="a validé">a validé</option>
+                    <option value="validé">validé</option>
+                    <option value="ouvert">ouvert</option>
+                    <option value="clôturé">clôturé</option>
+                    <option value="archivé">archivé</option>
+                </select>
+            </div>
+            <div>
+                <label for="groupeResponsable" class="required">Groupe Responsable</label>
+                <select id="groupeResponsable" name="groupeResponsable" required>
+                    <option value="Groupe de test">Groupe de test</option>
+                    <option value="ADM ERP">ADM ERP</option>
+                    <option value="ADM OUTILS">ADM OUTILS</option>
+                    <option value="BUILD">BUILD</option>
+                    <option value="CAB">CAB</option>
+                    <option value="CYBERSECURITE">CYBERSECURITE</option>
+                    <option value="DATAMANAGEMENT ESCALADE SOFTWARE">DATAMANAGEMENT ESCALADE SOFTWARE</option>
+                    <option value="DATAMANAGEMENT EXPLOITATION">DATAMANAGEMENT EXPLOITATION</option>
+                    <option value="INFRASTRUCTURE ADC">INFRASTRUCTURE ADC</option>
+                    <option value="INFRASTRUCTURE URBANISATION">INFRASTRUCTURE URBANISATION</option>
+                    <option value="INFRASTRUCTURE RESEAU">INFRASTRUCTURE RESEAU</option>
+                    <option value="INFRASTRUCTURE STOCKAGE SYSTÈME">INFRASTRUCTURE STOCKAGE SYSTÈME</option>
+                    <option value="INFRASTRUCTURE VIRTUALISATION SAUVEGARDE">INFRASTRUCTURE VIRTUALISATION SAUVEGARDE</option>
+                    <option value="LOGISTIQUE">LOGISTIQUE</option>
+                </select>
+            </div>
+        </div>        
+        <div id="additionalFields"></div>
+        <div class="form-actions">
+            <button type="button" onclick="addFields()">Ajouter un autre titre, statut, contenu</button>
+            <button type="submit">Terminer</button>
+            <button type="button">Annuler</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function addFields() {
+        const form = document.getElementById('knowledgeForm');
+        
+        if (form.checkValidity()) {
+            const container = document.getElementById('additionalFields');
+            const index = container.children.length / 2; // Diviser par 2 car chaque groupe de champs inclut un bouton Toggle et un FieldSet
+    
+            const fieldSet = document.createElement('div');
+            fieldSet.classList.add('field-set');
+    
+            const toggleButton = document.createElement('button');
+            toggleButton.setAttribute('type', 'button');
+            toggleButton.textContent = 'Afficher/Masquer';
+            toggleButton.onclick = () => {
+                const fieldsToToggle = fieldSet.querySelectorAll('.toggle-field');
+                fieldsToToggle.forEach(field => {
+                    field.style.display = field.style.display === 'none' ? '' : 'none';
+                });
+            };
+    
+            const titleGroup = document.createElement('div');
+            titleGroup.classList.add('form-group');
+            const titleLabel = document.createElement('label');
+            titleLabel.setAttribute('for', `titre${index}`);
+            titleLabel.textContent = 'Titre';
+            titleLabel.classList.add('required');
+            const titleInput = document.createElement('input');
+            titleInput.setAttribute('type', 'text');
+            titleInput.setAttribute('id', `titre${index}`);
+            titleInput.setAttribute('name', `titre${index}`);
+            titleInput.setAttribute('required', 'required');
+            titleGroup.appendChild(titleLabel);
+            titleGroup.appendChild(titleInput);
+    
+            const contenuGroup = document.createElement('div');
+            contenuGroup.classList.add('form-group', 'toggle-field');
+            const contenuLabel = document.createElement('label');
+            contenuLabel.setAttribute('for', `contenu${index}`);
+            contenuLabel.textContent = 'Contenu';
+            contenuLabel.classList.add('required');
+            const contenuTextarea = document.createElement('textarea');
+            contenuTextarea.setAttribute('id', `contenu${index}`);
+            contenuTextarea.setAttribute('name', `contenu${index}`);
+            contenuTextarea.setAttribute('required', 'required');
+            contenuTextarea.style.height = '200px';
+            contenuTextarea.style.width = '100%';
+            contenuGroup.appendChild(contenuLabel);
+            contenuGroup.appendChild(contenuTextarea);
+    
+            const visionGroup = document.createElement('div');
+            visionGroup.classList.add('form-group', 'toggle-field', 'flex-container');
+            const visionNextGroup = document.createElement('div');
+            visionNextGroup.classList.add('form-group');
+            const visionNextLabel = document.createElement('label');
+            visionNextLabel.setAttribute('for', `visionNext${index}`);
+            visionNextLabel.textContent = 'Titre de la prochaine vision';
+            visionNextLabel.classList.add('required');
+            const visionNextInput = document.createElement('input');
+            visionNextInput.setAttribute('type', 'text');
+            visionNextInput.setAttribute('id', `visionNext${index}`);
+            visionNextInput.setAttribute('name', `visionNext${index}`);
+            visionNextInput.setAttribute('required', 'required');
+            visionNextGroup.appendChild(visionNextLabel);
+            visionNextGroup.appendChild(visionNextInput);
+    
+            const visionCurrentGroup = document.createElement('div');
+            visionCurrentGroup.classList.add('form-group');
+            const visionCurrentLabel = document.createElement('label');
+            visionCurrentLabel.setAttribute('for', `visionCurrent${index}`);
+            visionCurrentLabel.textContent = 'Titre de la vision';
+            visionCurrentLabel.classList.add('required');
+            const visionCurrentInput = document.createElement('input');
+            visionCurrentInput.setAttribute('type', 'text');
+            visionCurrentInput.setAttribute('id', `visionCurrent${index}`);
+            visionCurrentInput.setAttribute('name', `visionCurrent${index}`);
+            visionCurrentInput.setAttribute('required', 'required');
+            visionCurrentGroup.appendChild(visionCurrentLabel);
+            visionCurrentGroup.appendChild(visionCurrentInput);
+    
+            visionGroup.appendChild(visionNextGroup);
+            visionGroup.appendChild(visionCurrentGroup);
+    
+            const durationGroup = document.createElement('div');
+            durationGroup.classList.add('form-group', 'toggle-field');
+            const durationLabel = document.createElement('label');
+            durationLabel.setAttribute('for', `duration${index}`);
+            durationLabel.textContent = 'Durée limite';
+            durationLabel.classList.add('required');
+            const durationInput = document.createElement('input');
+            durationInput.setAttribute('type', 'text');
+            durationInput.setAttribute('id', `duration${index}`);
+            durationInput.setAttribute('name', `duration${index}`);
+            durationInput.setAttribute('required', 'required');
+            durationGroup.appendChild(durationLabel);
+            durationGroup.appendChild(durationInput);
+    
+            const publicGroup = document.createElement('div');
+            publicGroup.classList.add('form-group', 'toggle-field');
+            const publicLabel = document.createElement('label');
+            publicLabel.textContent = 'Public';
+            publicLabel.classList.add('required');
+            const publicYesInput = document.createElement('input');
+            publicYesInput.setAttribute('type', 'radio');
+            publicYesInput.setAttribute('id', `publicYes${index}`);
+            publicYesInput.setAttribute('name', `public${index}`);
+            publicYesInput.setAttribute('value', 'oui');
+            publicYesInput.setAttribute('required', 'required');
+            const publicYesLabel = document.createElement('label');
+            publicYesLabel.setAttribute('for', `publicYes${index}`);
+            publicYesLabel.textContent = 'Oui';
+    
+            const publicNoInput = document.createElement('input');
+            publicNoInput.setAttribute('type', 'radio');
+            publicNoInput.setAttribute('id', `publicNo${index}`);
+            publicNoInput.setAttribute('name', `public${index}`);
+            publicNoInput.setAttribute('value', 'non');
+            publicNoInput.setAttribute('required', 'required');
+            const publicNoLabel = document.createElement('label');
+            publicNoLabel.setAttribute('for', `publicNo${index}`);
+            publicNoLabel.textContent = 'Non';
+    
+            const publicOptionsContainer = document.createElement('div');
+            publicOptionsContainer.classList.add('radio-options');
+            publicOptionsContainer.appendChild(publicYesInput);
+            publicOptionsContainer.appendChild(publicYesLabel);
+            publicOptionsContainer.appendChild(publicNoInput);
+            publicOptionsContainer.appendChild(publicNoLabel);
+    
+            publicGroup.appendChild(publicLabel);
+            publicGroup.appendChild(publicOptionsContainer);
+    
+            fieldSet.appendChild(toggleButton);
+            fieldSet.appendChild(titleGroup);
+            fieldSet.appendChild(contenuGroup);
+            fieldSet.appendChild(visionGroup);
+            fieldSet.appendChild(durationGroup);
+            fieldSet.appendChild(publicGroup);
+    
+            container.appendChild(fieldSet);
+        } else {
+            form.reportValidity();
+        }
+    }
+</script>
+
+</body>
+</html>
